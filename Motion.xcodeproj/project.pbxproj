@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8529C57E1970D8B300629650 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8529C57D1970D8B300629650 /* FXBlurView.m */; };
 		85CE86B6197237FE00F11075 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CE86B5197237FE00F11075 /* GraphView.m */; };
 		85E35C24194DFD03002376E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E35C23194DFD03002376E0 /* AppDelegate.swift */; };
 		85E35C26194DFD03002376E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E35C25194DFD03002376E0 /* ViewController.swift */; };
@@ -28,9 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8529C57B1970D8B200629650 /* Motion-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Motion-Bridging-Header.h"; sourceTree = "<group>"; };
-		8529C57C1970D8B300629650 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
-		8529C57D1970D8B300629650 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		85B6EEDC19B9D7C500F01516 /* Motion-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Motion-Bridging-Header.h"; path = "Motion/Motion-Bridging-Header.h"; sourceTree = "<group>"; };
 		85CE86B4197237FE00F11075 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
 		85CE86B5197237FE00F11075 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		85E35C1E194DFD03002376E0 /* Motion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				85E35C20194DFD03002376E0 /* Motion */,
+				85B6EEDC19B9D7C500F01516 /* Motion-Bridging-Header.h */,
 				85E35C33194DFD03002376E0 /* MotionTests */,
 				85E35C1F194DFD03002376E0 /* Products */,
 			);
@@ -89,12 +87,9 @@
 				85E35C40194E03D4002376E0 /* MotionDetector.swift */,
 				85E35C27194DFD03002376E0 /* Main.storyboard */,
 				85E35C2A194DFD03002376E0 /* Images.xcassets */,
-				8529C57C1970D8B300629650 /* FXBlurView.h */,
-				8529C57D1970D8B300629650 /* FXBlurView.m */,
 				85CE86B4197237FE00F11075 /* GraphView.h */,
 				85CE86B5197237FE00F11075 /* GraphView.m */,
 				85E35C21194DFD03002376E0 /* Supporting Files */,
-				8529C57B1970D8B200629650 /* Motion-Bridging-Header.h */,
 			);
 			path = Motion;
 			sourceTree = "<group>";
@@ -226,7 +221,6 @@
 			files = (
 				85E35C26194DFD03002376E0 /* ViewController.swift in Sources */,
 				85CE86B6197237FE00F11075 /* GraphView.m in Sources */,
-				8529C57E1970D8B300629650 /* FXBlurView.m in Sources */,
 				85E35C24194DFD03002376E0 /* AppDelegate.swift in Sources */,
 				85E35C41194E03D4002376E0 /* MotionDetector.swift in Sources */,
 			);

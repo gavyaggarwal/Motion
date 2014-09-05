@@ -9,10 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, MotionDetectorDelegate {
-    @IBOutlet var positionLabel : UILabel
-    @IBOutlet var velocityLabel : UILabel
-    @IBOutlet var accelerationLabel : UILabel
-    @IBOutlet var graphView: GraphView
+    @IBOutlet var positionLabel : UILabel?
+    @IBOutlet var velocityLabel : UILabel?
+    @IBOutlet var accelerationLabel : UILabel?
+    @IBOutlet var graphView: GraphView!
     
     var motionDetector: MotionDetector?
                             
@@ -33,13 +33,13 @@ class ViewController: UIViewController, MotionDetectorDelegate {
     
     func positionUpdated(value: String) {
         graphView.addX(0, y: 1, z: 2)
-        positionLabel.text = value;
+        positionLabel?.text = value;
     }
     func velocityUpdated(value: String)  {
-        velocityLabel.text = value
+        velocityLabel?.text = value
     }
     func accelerationUpdated(value: String)  {
-        accelerationLabel.text = value;
+        accelerationLabel?.text = value;
     }
 
 

@@ -52,7 +52,7 @@ class MotionDetector:NSObject {
         
         self.delegate?.positionUpdated("13 m")
         self.delegate?.velocityUpdated("19 m/s")
-        self.delegate?.accelerationUpdated("12 m/s" + "\u00B2")
+        self.delegate?.accelerationUpdated("12 m/s" + "\u{00B2}")
     }
     
     func stop() {
@@ -65,9 +65,9 @@ class MotionDetector:NSObject {
         var gravity = motionManager.deviceMotion?.gravity
         
         
-        var gX : CDouble! = (gravity?.x) ? gravity?.x : 0
-        var gY : CDouble! = (gravity?.y) ? gravity?.y : 0
-        var gZ : CDouble! = (gravity?.z) ? gravity?.z : 0
+        var gX : CDouble! = (gravity?.x == nil) ? gravity?.x : 0
+        var gY : CDouble! = (gravity?.y == nil) ? gravity?.y : 0
+        var gZ : CDouble! = (gravity?.z == nil) ? gravity?.z : 0
         
         //if gZ is -1, than the device is upright (flat, screen up) and motion in X goes x, y goes y, and Z goes z
         //if gY is -1, then the device's charger is facing the ground and motion in X goes X, Y goes Z, and Z goes y
@@ -75,9 +75,9 @@ class MotionDetector:NSObject {
         
         //NSLog("GRAVITY: %f %f %f", gX, gY, gZ)
         
-        var accelX : CDouble! = (userAccelation?.x) ? userAccelation?.x : 0
-        var accelY : CDouble! = (userAccelation?.y) ? userAccelation?.y : 0;
-        var accelZ : CDouble! = (userAccelation?.z) ? userAccelation?.z : 0;
+        var accelX : CDouble! = (userAccelation?.x == nil) ? userAccelation?.x : 0
+        var accelY : CDouble! = (userAccelation?.y == nil) ? userAccelation?.y : 0;
+        var accelZ : CDouble! = (userAccelation?.z == nil) ? userAccelation?.z : 0;
         
         NSLog("CROSS PRODUCT: <%f %f %f>", accelY * gZ - accelZ * gY, accelZ * gX - accelX * gZ, accelX * gY - accelY * gX)
         
@@ -117,7 +117,7 @@ class MotionDetector:NSObject {
         var roundedVel = round(10 * totalVel) / 10
         var roundedPos = round(10 * totalPos) / 10
         
-        var formattedAccel = "\(roundedAccel) m/s" + "\u00B2"
+        var formattedAccel = "\(roundedAccel) m/s" + "\u{00B2}"
         var formattedVel = "\(roundedVel) m/s"
         var formattedPos = "\(roundedPos) m"
         
