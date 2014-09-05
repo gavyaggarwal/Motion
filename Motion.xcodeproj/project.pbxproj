@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		85CE86B6197237FE00F11075 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CE86B5197237FE00F11075 /* GraphView.m */; };
 		85E35C24194DFD03002376E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E35C23194DFD03002376E0 /* AppDelegate.swift */; };
 		85E35C26194DFD03002376E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E35C25194DFD03002376E0 /* ViewController.swift */; };
 		85E35C29194DFD03002376E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85E35C27194DFD03002376E0 /* Main.storyboard */; };
@@ -28,8 +27,6 @@
 
 /* Begin PBXFileReference section */
 		85B6EEDC19B9D7C500F01516 /* Motion-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Motion-Bridging-Header.h"; path = "Motion/Motion-Bridging-Header.h"; sourceTree = "<group>"; };
-		85CE86B4197237FE00F11075 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
-		85CE86B5197237FE00F11075 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		85E35C1E194DFD03002376E0 /* Motion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Motion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85E35C22194DFD03002376E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85E35C23194DFD03002376E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,8 +84,6 @@
 				85E35C40194E03D4002376E0 /* MotionDetector.swift */,
 				85E35C27194DFD03002376E0 /* Main.storyboard */,
 				85E35C2A194DFD03002376E0 /* Images.xcassets */,
-				85CE86B4197237FE00F11075 /* GraphView.h */,
-				85CE86B5197237FE00F11075 /* GraphView.m */,
 				85E35C21194DFD03002376E0 /* Supporting Files */,
 			);
 			path = Motion;
@@ -220,7 +215,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				85E35C26194DFD03002376E0 /* ViewController.swift in Sources */,
-				85CE86B6197237FE00F11075 /* GraphView.m in Sources */,
 				85E35C24194DFD03002376E0 /* AppDelegate.swift in Sources */,
 				85E35C41194E03D4002376E0 /* MotionDetector.swift in Sources */,
 			);
@@ -339,6 +333,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Motion/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -347,6 +343,7 @@
 					"$(PROJECT_DIR)/Motion",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Motion/Motion-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -358,6 +355,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Motion/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -366,6 +365,7 @@
 					"$(PROJECT_DIR)/Motion",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Motion/Motion-Bridging-Header.h";
 			};
 			name = Release;

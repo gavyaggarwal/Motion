@@ -65,9 +65,9 @@ class MotionDetector:NSObject {
         var gravity = motionManager.deviceMotion?.gravity
         
         
-        var gX : CDouble! = (gravity?.x == nil) ? gravity?.x : 0
-        var gY : CDouble! = (gravity?.y == nil) ? gravity?.y : 0
-        var gZ : CDouble! = (gravity?.z == nil) ? gravity?.z : 0
+        var gX : CDouble! = (gravity?.x != nil) ? gravity?.x : 0
+        var gY : CDouble! = (gravity?.y != nil) ? gravity?.y : 0
+        var gZ : CDouble! = (gravity?.z != nil) ? gravity?.z : 0
         
         //if gZ is -1, than the device is upright (flat, screen up) and motion in X goes x, y goes y, and Z goes z
         //if gY is -1, then the device's charger is facing the ground and motion in X goes X, Y goes Z, and Z goes y
@@ -75,9 +75,9 @@ class MotionDetector:NSObject {
         
         //NSLog("GRAVITY: %f %f %f", gX, gY, gZ)
         
-        var accelX : CDouble! = (userAccelation?.x == nil) ? userAccelation?.x : 0
-        var accelY : CDouble! = (userAccelation?.y == nil) ? userAccelation?.y : 0;
-        var accelZ : CDouble! = (userAccelation?.z == nil) ? userAccelation?.z : 0;
+        var accelX : CDouble! = (userAccelation?.x != nil) ? userAccelation?.x : 0
+        var accelY : CDouble! = (userAccelation?.y != nil) ? userAccelation?.y : 0;
+        var accelZ : CDouble! = (userAccelation?.z != nil) ? userAccelation?.z : 0;
         
         NSLog("CROSS PRODUCT: <%f %f %f>", accelY * gZ - accelZ * gY, accelZ * gX - accelX * gZ, accelX * gY - accelY * gX)
         
@@ -129,9 +129,18 @@ class MotionDetector:NSObject {
         //NSLog("Acceleration: %f, %f, %f", self.accelerationX, self.accelerationY, self.accelerationZ)
         //NSLog("Velocity:     %f, %f, %f", self.velocityX, self.velocityY, self.velocityZ)
         //NSLog("Position:     %f, %f, %f", self.positionX, self.positionY, self.positionZ)
+        
+        var angleZ : Double = atan(Double(gZ) / Double(sqrt(gX * gX + gY * gY)))
+        //Angle Z contains the device's orientation to the ground with respect to the Z axis
+        //Thanks Eric from StackOverflow!
+        NSLog("Gravity: x: %f, y: %f, z: %f, AngleZ: %f", gX, gY, gZ, RadiansToDegrees(angleZ))
     }
     
     func pythagorean(x: CDouble, y: CDouble, z: CDouble) -> CDouble {
         return sqrt(x * x + y * y + z * z)
+    }
+    
+    func RadiansToDegrees (value:Double) -> Double {
+        return value * 180.0 / M_PI
     }
 }

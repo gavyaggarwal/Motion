@@ -12,7 +12,6 @@ class ViewController: UIViewController, MotionDetectorDelegate {
     @IBOutlet var positionLabel : UILabel?
     @IBOutlet var velocityLabel : UILabel?
     @IBOutlet var accelerationLabel : UILabel?
-    @IBOutlet var graphView: GraphView!
     
     var motionDetector: MotionDetector?
                             
@@ -32,7 +31,6 @@ class ViewController: UIViewController, MotionDetectorDelegate {
     }
     
     func positionUpdated(value: String) {
-        graphView.addX(0, y: 1, z: 2)
         positionLabel?.text = value;
     }
     func velocityUpdated(value: String)  {
