@@ -30,6 +30,13 @@ class ViewController: UIViewController, MotionDetectorDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func reset(sender: AnyObject) {
+        motionDetector?.reset()
+    }
+    @IBAction func breakPoint(sender: AnyObject) {
+        motionDetector?.breakPoint()
+    }
+    
     func positionUpdated(value: String) {
         positionLabel?.text = value;
     }

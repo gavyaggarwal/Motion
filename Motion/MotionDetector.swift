@@ -29,6 +29,8 @@ class MotionDetector:NSObject {
     var positionY : CDouble
     var positionZ : CDouble
     
+    var shouldBreak = false
+    
     init(delegate: MotionDetectorDelegate) {
         self.delegate = delegate;
         motionManager = CMMotionManager()
@@ -48,7 +50,7 @@ class MotionDetector:NSObject {
         motionManager.startDeviceMotionUpdates()
         motionManager.deviceMotionUpdateInterval = 0.001
         
-        NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateData", userInfo: nil, repeats: true);
+        NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: "updateData", userInfo: nil, repeats: true);
         
         self.delegate?.positionUpdated("13 m")
         self.delegate?.velocityUpdated("19 m/s")
@@ -57,6 +59,23 @@ class MotionDetector:NSObject {
     
     func stop() {
         motionManager.stopDeviceMotionUpdates()
+    }
+    
+    func reset() {
+        updateDate = NSDate()
+        accelerationX = 0.0;
+        accelerationY = 0.0;
+        accelerationZ = 0.0;
+        velocityX = 0.0;
+        velocityY = 0.0;
+        velocityZ = 0.0;
+        positionX = 0.0;
+        positionY = 0.0;
+        positionZ = 0.0;
+    }
+    
+    func breakPoint() {
+        shouldBreak = true;
     }
     
     func updateData() {
@@ -73,17 +92,29 @@ class MotionDetector:NSObject {
         //if gY is -1, then the device's charger is facing the ground and motion in X goes X, Y goes Z, and Z goes y
         //if gX is -1, then volume botton faces down and motion in X goes in z plane, Y goes in X, and Z goes
         
-        //NSLog("GRAVITY: %f %f %f", gX, gY, gZ)
+        var aZ : Double = atan(Double(gZ) / sqrt(gX * gX + gY * gY))
+        //aZ contains the angle of the device's orientation to the ground with respect to the Z axis
+        //Thanks Eric from StackOverflow!
+        
+        //NSLog("Gravity: x: %f, y: %f, z: %f", gX, gY, gZ)
         
         var accelX : CDouble! = (userAccelation?.x != nil) ? userAccelation?.x : 0
         var accelY : CDouble! = (userAccelation?.y != nil) ? userAccelation?.y : 0;
         var accelZ : CDouble! = (userAccelation?.z != nil) ? userAccelation?.z : 0;
         
-        NSLog("CROSS PRODUCT: <%f %f %f>", accelY * gZ - accelZ * gY, accelZ * gX - accelX * gZ, accelX * gY - accelY * gX)
+        //NSLog("CROSS PRODUCT: <%f %f %f>", accelY * gZ - accelZ * gY, accelZ * gX - accelX * gZ, accelX * gY - accelY * gX)
         
         self.accelerationX = accelX * 9.80665
         self.accelerationY = accelY * 9.80665
-        self.accelerationZ = accelZ * 9.80665
+        self.accelerationZ = (accelZ * gZ + accelY * gY + accelX * gX) * 9.80665
+        
+        if (shouldBreak) {
+            shouldBreak = !shouldBreak;
+            var a = accelZ * gZ * 9.80665
+            var b = accelY * gY * 9.80665
+            var c = accelX * gX * 9.80665
+            
+        }
         
         var time = self.updateDate.timeIntervalSinceNow
         
@@ -113,9 +144,9 @@ class MotionDetector:NSObject {
         var totalVel = pythagorean(self.velocityX, y: self.velocityY, z: self.velocityZ)
         var totalPos = pythagorean(self.positionX, y: self.positionY, z: self.positionZ)
         
-        var roundedAccel = round(10 * totalAccel) / 10
-        var roundedVel = round(10 * totalVel) / 10
-        var roundedPos = round(10 * totalPos) / 10
+        var roundedAccel = round(10 * self.accelerationZ) / 10
+        var roundedVel = round(10 * self.velocityZ) / 10
+        var roundedPos = round(10 * self.positionZ) / 10
         
         var formattedAccel = "\(roundedAccel) m/s" + "\u{00B2}"
         var formattedVel = "\(roundedVel) m/s"
@@ -129,11 +160,6 @@ class MotionDetector:NSObject {
         //NSLog("Acceleration: %f, %f, %f", self.accelerationX, self.accelerationY, self.accelerationZ)
         //NSLog("Velocity:     %f, %f, %f", self.velocityX, self.velocityY, self.velocityZ)
         //NSLog("Position:     %f, %f, %f", self.positionX, self.positionY, self.positionZ)
-        
-        var angleZ : Double = atan(Double(gZ) / Double(sqrt(gX * gX + gY * gY)))
-        //Angle Z contains the device's orientation to the ground with respect to the Z axis
-        //Thanks Eric from StackOverflow!
-        NSLog("Gravity: x: %f, y: %f, z: %f, AngleZ: %f", gX, gY, gZ, RadiansToDegrees(angleZ))
     }
     
     func pythagorean(x: CDouble, y: CDouble, z: CDouble) -> CDouble {
