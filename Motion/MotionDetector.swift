@@ -50,7 +50,7 @@ class MotionDetector:NSObject {
         motionManager.startDeviceMotionUpdates()
         motionManager.deviceMotionUpdateInterval = 0.001
         
-        NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: "updateData", userInfo: nil, repeats: true);
+        NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: "shouldUpdateData", userInfo: nil, repeats: true);
         
         self.delegate?.positionUpdated("13 m")
         self.delegate?.velocityUpdated("19 m/s")
@@ -72,15 +72,31 @@ class MotionDetector:NSObject {
         positionX = 0.0;
         positionY = 0.0;
         positionZ = 0.0;
+        
+        //updateData()
     }
     
     func breakPoint() {
         shouldBreak = true;
     }
     
-    func updateData() {
+    func shouldUpdateData() {
+        var userAcceleration = motionManager.deviceMotion?.userAcceleration
+        
+        var accelX : CDouble! = (userAcceleration?.x != nil) ? userAcceleration?.x : 0
+        var accelY : CDouble! = (userAcceleration?.y != nil) ? userAcceleration?.y : 0;
+        var accelZ : CDouble! = (userAcceleration?.z != nil) ? userAcceleration?.z : 0;
+        
+        if(abs(accelX) > 0.05 || abs(accelY) > 0.05 || abs(accelZ) > 0.05) {
+            updateData(accelX, accelY: accelY, accelZ: accelZ)
+        } else {
+            updateData(0, accelY: 0, accelZ: 0)
+        }
+    }
+    
+    func updateData(accelX:Double, accelY:Double, accelZ:Double) {
         //var gravity = motionManager.deviceMotion?.gravity
-        var userAccelation = motionManager.deviceMotion?.userAcceleration
+        var userAcceleration = motionManager.deviceMotion?.userAcceleration
         var gravity = motionManager.deviceMotion?.gravity
         
         
@@ -98,14 +114,10 @@ class MotionDetector:NSObject {
         
         //NSLog("Gravity: x: %f, y: %f, z: %f", gX, gY, gZ)
         
-        var accelX : CDouble! = (userAccelation?.x != nil) ? userAccelation?.x : 0
-        var accelY : CDouble! = (userAccelation?.y != nil) ? userAccelation?.y : 0;
-        var accelZ : CDouble! = (userAccelation?.z != nil) ? userAccelation?.z : 0;
-        
         //NSLog("CROSS PRODUCT: <%f %f %f>", accelY * gZ - accelZ * gY, accelZ * gX - accelX * gZ, accelX * gY - accelY * gX)
         
         self.accelerationX = accelX * 9.80665
-        self.accelerationY = accelY * 9.80665
+        self.accelerationY = (accelY * gZ + accelZ * gY + accelZ * gX) * 9.80665
         self.accelerationZ = (accelZ * gZ + accelY * gY + accelX * gX) * 9.80665
         
         if (shouldBreak) {
