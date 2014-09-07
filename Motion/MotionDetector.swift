@@ -47,10 +47,13 @@ class MotionDetector:NSObject {
     }
     
     func start() {
+        var interval = 0.001
         motionManager.startDeviceMotionUpdates()
-        motionManager.deviceMotionUpdateInterval = 0.001
+        motionManager.startGyroUpdates()  //TODO: Remove this
+        motionManager.deviceMotionUpdateInterval = interval
         
-        NSTimer.scheduledTimerWithTimeInterval(0.001, target: self, selector: "shouldUpdateData", userInfo: nil, repeats: true);
+        
+        NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: "shouldUpdateData", userInfo: nil, repeats: true)
         
         self.delegate?.positionUpdated("13 m")
         self.delegate?.velocityUpdated("19 m/s")
@@ -98,7 +101,9 @@ class MotionDetector:NSObject {
         //var gravity = motionManager.deviceMotion?.gravity
         var userAcceleration = motionManager.deviceMotion?.userAcceleration
         var gravity = motionManager.deviceMotion?.gravity
-        
+        var gyro1 = motionManager.deviceMotion?.rotationRate //This should have bias removed - TODO: We need to compare the two
+        var gyro2 = motionManager.gyroData.rotationRate
+
         
         var gX : CDouble! = (gravity?.x != nil) ? gravity?.x : 0
         var gY : CDouble! = (gravity?.y != nil) ? gravity?.y : 0
@@ -118,7 +123,7 @@ class MotionDetector:NSObject {
         
         self.accelerationX = accelX * 9.80665
         self.accelerationY = (accelY * gZ + accelZ * gY + accelZ * gX) * 9.80665
-        self.accelerationZ = (accelZ * gZ + accelY * gY + accelX * gX) * 9.80665
+        self.accelerationZ = (accelZ * gZ + accelY * gY + accelX * gX) * 9.80665 //+ wYr1 + wXr2
         
         if (shouldBreak) {
             shouldBreak = !shouldBreak;
